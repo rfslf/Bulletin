@@ -1,0 +1,15 @@
+{% extends 'flatpages/default.html' %}
+ 
+{% block title %} Delete bulletin {% endblock title %}
+ 
+{% block content %}
+<h3>Удаление объявления</h3>
+<h1>{{ bulletin.header }}</h1>
+<h3>{{ bulletin.create_time|date:'d-M-Y H:m' }} </h3>
+{{ bulletin.body }}
+<form method="POST">
+    {% csrf_token %} 
+    {{ form }} <!-- Теперь нам нужна только готовая форма и кнопка -->
+    <input type="submit" value="Удалить объявление">
+</form>
+{% endblock content %}

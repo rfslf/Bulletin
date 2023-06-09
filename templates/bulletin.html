@@ -1,0 +1,36 @@
+<!--  наследуемся от шаблона default.html, который мы создавали ещё во времена flatpages -->
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Bulletin
+{% endblock title %}
+
+{% block content %}
+<h1>{{ bulletin.header }}</h1>
+<h4>Категория: {{ bulletin.category_name }}</h4>
+{{ bulletin.body }}
+<p><b>{{ bulletin.author }}</b>, <i>{{ bulletin.create_time|date:'d-M-Y H:m' }} </i></p>
+<hr>
+ <form method="post">
+    {% csrf_token %}
+    <p>Оставить отклик:</p>
+    <p><textarea rows="5" cols="60" name="reply"></textarea></p>
+    <input type="submit" value="Сохранить">
+ </form>
+<hr>
+{% if bulletin.get_replies %}
+    <h3>Отклики:</h3>
+    <table>
+    {% for reply in bulletin.get_replies %}
+        <tr>
+         <p>{{ reply.reply }}</p>
+                <p><b>{{ reply.user }}</b>, <i>{{ reply.reply_time|date:'d-M-Y H:m' }}</i></p>
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+{% else %}
+    <p>Отзывов нет</p>
+{% endif %}
+
+{% endblock content %}

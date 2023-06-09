@@ -1,0 +1,36 @@
+{% extends 'flatpages/default.html' %}
+
+{% block title %}
+Личная страница
+{% endblock title %}
+
+{% block content %}
+    <h1>Ваши отклики</h1>
+    <form method="GET">
+        <p>
+        По объявлению:
+        {{ filter.form.bulletin }}
+        <p>
+        <input type="submit" value="Найти">
+    </form>
+    <hr>
+    {% if home %}
+        {% for reply in filter.qs %}
+            <div class="post-preview">
+                <p class="post-subtitle">
+                    <a href='/board/{{ reply.bulletin_id }}'>
+                        {{ reply.reply}}
+                    </a>
+                </p>
+                <p><b>{{ reply.user }}</b>, <i>{{ reply.reply_time|date:'d-M-Y H:m' }}</i></p>
+                <p>
+                    {% if not reply.accept %}
+                        <a href="{% url 'reply_accept' reply.id %}"><u>Принять отклик</u></a>
+                    {% endif %}
+                    <a href="{% url 'reply_delete' reply.id %}"><u>Удалить отклик</u></a>
+                </p>
+            </div>
+            <hr>
+        {% endfor %}
+    {% endif %}
+{% endblock content %}

@@ -1,0 +1,14 @@
+{% extends 'flatpages/default.html' %}
+ 
+{% block title %} Create bulletin {% endblock title %}
+ 
+{% block content %}
+<h3>Создание объявления</h3>
+<form method="POST">
+    {% csrf_token %} 
+    <p>Заголовок: {{ form.header }}</p>
+    <p>Категория: {{ form.category_name }}</p>
+    <p>{{ form.body }}</p>
+    <input type="submit" value="Добавить объявление">
+</form>
+{% endblock content %}
